@@ -11,3 +11,7 @@ Some interest things it does:
 - Logging
 
 Analysis is done in R externally.
+
+## Update
+
+Lendingclub is no more, so this is now public.

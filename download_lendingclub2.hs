@@ -5,7 +5,6 @@ import Control.Monad.Fix
 import Control.Retry
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.Char8 as B
--- import Text.CSV.ByteString
 import Data.List (sort)
 import Data.Monoid ((<>))
 import Data.String.Utils
@@ -28,7 +27,7 @@ import System.Log.Handler        (setFormatter)
 import System.Log.Handler.Simple (streamHandler)
 import System.Log.Logger         (Priority (DEBUG, INFO, WARNING, ERROR), debugM, infoM, warningM,
                                   errorM, rootLoggerName,setHandlers, setLevel, updateGlobalLogger)
--- THIS IS ALL FROM http://fakedrake.github.io/streaming-data-through-http-with-haskell.html
+-- ref http://fakedrake.github.io/streaming-data-through-http-with-haskell.html
 
 initLogging :: Priority -> IO ()
 initLogging level = do
@@ -43,7 +42,6 @@ ppd :: String  -> IO ()
 ppd msg = debugM "" msg
 
 
--- THIS PRESENTLY LIVES IN ~/prod/download_lendingclub
 cDOWNLOADDIR = "/tmp/"
 cDATADIR = "/mydata/Data/LendingClub/" -- mydata
 cURL = "https://resources.lendingclub.com/SecondaryMarketAllNotes.csv"
@@ -59,7 +57,6 @@ getLatestFname dirname = do
   ls <- getDirectoryContents cwd
   let csvs = sort $ filter (\x -> x =~ ("csv$" :: String)) ls
   recent <- makeAbsolute $ last csvs
-  -- putStrLn $ "Most recent filename is: " ++ recent
   ppi $ "Most recent filename is: " ++ recent
   return recent
 
@@ -137,7 +134,6 @@ mvOutFile tmpname newname = do
     else do
       ppi "Oh no!  No file!"
 
--- I don't know why I have to rewrite this function.  This is dumb.
 getFileSize :: FilePath -> IO Integer
 getFileSize fpath = do
   sz <- withFile fpath ReadMode hFileSize
